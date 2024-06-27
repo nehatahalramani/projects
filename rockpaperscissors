@@ -1,0 +1,80 @@
+# projects
+import random
+
+def get_computer_choice():
+    """
+    Function to get the computer's choice.
+    Returns a random choice from 'rock', 'paper', or 'scissors'.
+    """
+    choices = ['rock', 'paper', 'scissors']
+    return random.choice(choices)
+
+def get_user_choice():
+    """
+    Function to get the user's choice.
+    Prompts the user to enter 'rock', 'paper', 'scissors', or 'quit' to stop playing.
+    Validates the input and prompts again if invalid.
+    """
+    user_input = input("Enter rock, paper, or scissors (or 'quit' to stop playing): ").lower()
+    if user_input in ['rock', 'paper', 'scissors', 'quit']:
+        return user_input
+    else:
+        print("Invalid input. Please try again.")
+        return get_user_choice()
+
+def determine_winner(user_choice, computer_choice):
+    """
+    Function to determine the winner of a round.
+    Compares user_choice and computer_choice and returns the result as a string.
+    """
+    if user_choice == computer_choice:
+        return "It's a tie!"
+    elif (user_choice == 'rock' and computer_choice == 'scissors') or \
+         (user_choice == 'scissors' and computer_choice == 'paper') or \
+         (user_choice == 'paper' and computer_choice == 'rock'):
+        return "You win!"
+    else:
+        return "Computer wins!"
+
+def play_game(rounds=5):
+    """
+    Main function to play the game.
+    Plays a specified number of rounds (default is 5).
+    Tracks the scores of the user and the computer.
+    Displays the final winner at the end of the game.
+    """
+    user_score = 0  # Initialize user's score
+    computer_score = 0  # Initialize computer's score
+    current_round = 0  # Initialize round counter
+
+    while current_round < rounds:  # Loop for the specified number of rounds
+        user_choice = get_user_choice()
+        if user_choice == 'quit':  # Allow user to quit the game
+            break
+        computer_choice = get_computer_choice()
+        print(f"Computer chose: {computer_choice}")
+        result = determine_winner(user_choice, computer_choice)
+        print(result)
+        
+        # Update scores based on the result
+        if result == "You win!":
+            user_score += 1
+        elif result == "Computer wins!":
+            computer_score += 1
+        
+        current_round += 1  # Increment the round counter
+        print(f"Score: You {user_score} - {computer_score} Computer")
+        print(f"Round {current_round} of {rounds} complete.\n")
+
+    # Display final results
+    print("Game over!")
+    print(f"Final score: You {user_score} - {computer_score} Computer")
+    if user_score > computer_score:
+        print("You are the overall winner!")
+    elif user_score < computer_score:
+        print("Computer is the overall winner!")
+    else:
+        print("The game is a tie!")
+
+# Start the game with 5 rounds
+play_game()
